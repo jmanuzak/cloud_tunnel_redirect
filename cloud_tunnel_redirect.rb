@@ -26,6 +26,10 @@ get '/' do
   end
 end
 
+get '/route' do
+  Route.all
+end
+
 post '/route' do
   source = params["source"]
   destination = params["destination"]

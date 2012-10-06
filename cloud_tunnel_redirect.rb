@@ -12,7 +12,7 @@ class Route
 end
 
 configure do
-  DataMapper.setup(:default, (ENV["DATABASE_URL"] || "sqlite3:///#{Dir.pwd}/development.sqlite3"))
+  DataMapper.setup(:default, (ENV["HEROKU_POSTGRESQL_CRIMSON_URL"] || "sqlite3:///#{Dir.pwd}/development.sqlite3"))
   DataMapper.auto_upgrade!
 end
 

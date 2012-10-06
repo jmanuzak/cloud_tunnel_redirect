@@ -3,6 +3,10 @@ require 'dm-core'
 require 'dm-serializer'
 require 'dm-migrations'
 
+Dir['vendor/*'].each do |lib|
+    $:.unshift(File.join(File.dirname(__FILE__), lib, 'lib'))
+end
+
 class Route
   include DataMapper::Resource
   property :id, Serial
@@ -27,7 +31,8 @@ get '/' do
 end
 
 get '/route' do
-  Route.all
+  @routes = Route.all
+  haml :index
 end
 
 post '/route' do
@@ -86,3 +91,15 @@ end
 def parse_hostname(host_string)
   host_string.split('.').first
 end
+
+__END__
+
+@@ index
+!!!
+%html
+  %head
+    %title Routes
+  %body
+    %ul
+    - @routes.each do |route|
+      %li= "#{route.source} --> #{route.destination}"
